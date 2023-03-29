@@ -7,10 +7,12 @@ const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const user_router_1 = require("./router/user.router");
-class ServerBootstrap {
+const config_1 = require("./config/config");
+class ServerBootstrap extends config_1.ConfigServer {
     constructor() {
+        super();
         this.app = (0, express_1.default)();
-        this.port = 8000;
+        this.port = this.getNumberEnv('PORT');
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
         this.app.use((0, cors_1.default)());
