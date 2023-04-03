@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { UserRouter } from './router/user.router';
 import { ConfigServer } from './config/config';
+import { DataSource } from 'typeorm';
+import { UserEntity } from './entities/user.entity';
 
 class ServerBootstrap extends ConfigServer {
   public app: express.Application = express();
@@ -15,6 +17,7 @@ class ServerBootstrap extends ConfigServer {
     this.app.use(cors());
     this.app.use(morgan('dev'));
 
+    this.dbConnection();
     this.app.use('/api', this.routers());
     this.listen();
   }
@@ -27,6 +30,21 @@ class ServerBootstrap extends ConfigServer {
     this.app.listen(this.port, () => {
       console.log(`Server listening on port: ${this.port}`);
     });
+  }
+
+  /**
+   * Apertura de conexion a base de datos usando el DataSource
+   *
+   * @return {*}  {Promise<DataSource>}
+   * @memberof ServerBoostrap
+   */
+  async dbConnection(): Promise<void> {
+    try {
+      await new DataSource(this.typeORMConfig).initialize();
+      console.log(`🚀  Database Connected`);
+    } catch (error) {
+      console.log(`🚀 Database Connection Error: ${error}`);
+    }
   }
 }
 
