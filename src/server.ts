@@ -31,21 +31,6 @@ class ServerBootstrap extends ConfigServer {
       console.log(`Server listening on port: ${this.port}`);
     });
   }
-
-  /**
-   * Apertura de conexion a base de datos usando el DataSource
-   *
-   * @return {*}  {Promise<DataSource>}
-   * @memberof ServerBoostrap
-   */
-  async dbConnection(): Promise<void> {
-    try {
-      await new DataSource(this.typeORMConfig).initialize();
-      console.log(`🚀  Database Connected`);
-    } catch (error) {
-      console.log(`🚀 Database Connection Error: ${error}`);
-    }
-  }
 }
 
 new ServerBootstrap();

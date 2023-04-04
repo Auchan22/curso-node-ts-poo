@@ -1,11 +1,11 @@
 import * as dotenv from 'dotenv';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { DataSourceOptions } from 'typeorm/data-source';
+import { DataSource, DataSourceOptions } from 'typeorm/data-source';
 import { UserEntity } from '../user/entities/user.entity';
 import { CustomerEntity } from '../customers/entities/customer.entity';
 import { ProductEntity } from '../product/entities/product.entity';
 import { CategoryEntity } from '../category/entities/category.entity';
-import { PurchasesProductsEntity } from '../custom/entities/purchases-product.entity';
+import { PurchasesProductsEntity } from '../purchase/entities/purchases-product.entity';
 import { PurchaseEntity } from '../purchase/entities/purchase.entity';
 
 export abstract class ConfigServer {
@@ -71,5 +71,15 @@ export abstract class ConfigServer {
       logging: false,
       namingStrategy: new SnakeNamingStrategy(),
     };
+  }
+
+  /**
+   * Apertura de conexion a base de datos usando el DataSource
+   *
+   * @return {*}  {Promise<DataSource>}
+   * @memberof ServerBoostrap
+   */
+  async dbConnection(): Promise<DataSource> {
+    return await new DataSource(this.typeORMConfig).initialize();
   }
 }
