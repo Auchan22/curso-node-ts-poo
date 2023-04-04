@@ -1,7 +1,12 @@
 import * as dotenv from 'dotenv';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { DataSourceOptions } from 'typeorm/data-source';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity } from '../user/entities/user.entity';
+import { CustomerEntity } from '../customers/entities/customer.entity';
+import { ProductEntity } from '../product/entities/product.entity';
+import { CategoryEntity } from '../category/entities/category.entity';
+import { PurchasesProductsEntity } from '../custom/entities/purchases-product.entity';
+import { PurchaseEntity } from '../purchase/entities/purchase.entity';
 
 export abstract class ConfigServer {
   constructor() {
@@ -51,9 +56,17 @@ export abstract class ConfigServer {
       username: this.getEnvironment('DB_USER'),
       password: this.getEnvironment('DB_PASSWORD'),
       database: this.getEnvironment('DB_DATABASE'),
-      entities: [UserEntity], // Si queremos que busque fuera de un directorio y por nombre de archivo y extensión
-      // entities: [__dirname + '../entities/*.entity{.ts,.js}'],
-      migrations: [__dirname + '/../../migrations/*{.ts, .js}'],
+      entities: [
+        UserEntity,
+        CustomerEntity,
+        ProductEntity,
+        CategoryEntity,
+        PurchaseEntity,
+        PurchasesProductsEntity,
+      ], // Si queremos que busque fuera de un directorio y por nombre de archivo y extensión
+      // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      // entities: [__dirname + '/../**/*.entity.{js,ts}'],
+      migrations: ['src/**/entities/*.entity{.ts, .js}'],
       synchronize: true,
       logging: false,
       namingStrategy: new SnakeNamingStrategy(),

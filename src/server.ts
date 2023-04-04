@@ -1,10 +1,10 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import { UserRouter } from './router/user.router';
+import { UserRouter } from './user/user.router';
 import { ConfigServer } from './config/config';
 import { DataSource } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
+import { UserEntity } from './user/entities/user.entity';
 
 class ServerBootstrap extends ConfigServer {
   public app: express.Application = express();
