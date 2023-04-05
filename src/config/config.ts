@@ -7,6 +7,7 @@ import { ProductEntity } from '../product/entities/product.entity';
 import { CategoryEntity } from '../category/entities/category.entity';
 import { PurchasesProductsEntity } from '../purchase/entities/purchases-product.entity';
 import { PurchaseEntity } from '../purchase/entities/purchase.entity';
+import { AppDataSource } from './data.source';
 
 export abstract class ConfigServer {
   constructor() {
@@ -41,45 +42,12 @@ export abstract class ConfigServer {
   }
 
   /**
-   * Configuracion del ORM para la base de datos.
-   *
-   * @readonly
-   * @type {DataSourceOptions}
-   * @memberof ConfigServer
-   */
-  public get typeORMConfig(): DataSourceOptions {
-    return {
-      type: 'mysql',
-      driver: {},
-      host: this.getEnvironment('DB_HOST'),
-      port: this.getNumberEnv('DB_PORT'),
-      username: this.getEnvironment('DB_USER'),
-      password: this.getEnvironment('DB_PASSWORD'),
-      database: this.getEnvironment('DB_DATABASE'),
-      entities: [
-        UserEntity,
-        CustomerEntity,
-        ProductEntity,
-        CategoryEntity,
-        PurchaseEntity,
-        PurchasesProductsEntity,
-      ], // Si queremos que busque fuera de un directorio y por nombre de archivo y extensión
-      // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      // entities: [__dirname + '/../**/*.entity.{js,ts}'],
-      migrations: ['src/**/entities/*.entity{.ts, .js}'],
-      synchronize: true,
-      logging: false,
-      namingStrategy: new SnakeNamingStrategy(),
-    };
-  }
-
-  /**
    * Apertura de conexion a base de datos usando el DataSource
    *
    * @return {*}  {Promise<DataSource>}
    * @memberof ServerBoostrap
    */
-  async dbConnection(): Promise<DataSource> {
-    return await new DataSource(this.typeORMConfig).initialize();
+  get Connection(): Promise<DataSource> {
+    return AppDataSource.initialize();
   }
 }

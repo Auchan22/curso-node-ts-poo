@@ -31,6 +31,12 @@ class ServerBootstrap extends ConfigServer {
       console.log(`Server listening on port: ${this.port}`);
     });
   }
+
+  async dbConnection(): Promise<DataSource | void> {
+    return this.Connection.then(() =>
+      console.log('🚀 Database Connected'),
+    ).catch((err) => console.error('❌ Hubo un error: ', err));
+  }
 }
 
 new ServerBootstrap();
