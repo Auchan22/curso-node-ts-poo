@@ -7,6 +7,25 @@ export class UserRouter extends BaseRouter<UserController> {
   }
 
   routes(): void {
-    this.router.get('/user', this.controller.getUsers);
+    //GET
+    this.router.get('/users', (req, res) => this.controller.getUsers(req, res));
+    this.router.get('/user/:id', (req, res) =>
+      this.controller.getUserById(req, res),
+    );
+
+    //POST
+    this.router.post('/user', (req, res) =>
+      this.controller.createUser(req, res),
+    );
+
+    //PUT
+    this.router.put('/user/:id', (req, res) =>
+      this.controller.updateUserById(req, res),
+    );
+
+    //DELETE
+    this.router.delete('/user/:id', (req, res) =>
+      this.controller.deleteUserById(req, res),
+    );
   }
 }

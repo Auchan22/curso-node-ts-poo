@@ -35,9 +35,9 @@ const Config: DataSourceOptions = {
   // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   // entities: [__dirname + '/../**/*.entity.{js,ts}'],
   migrations: [__dirname + '/../../migrations/*{.ts, .js}'],
-  synchronize: true,
+  synchronize: false,
   //   synchronize: false,
-  //   migrationsRun: true,
+  // migrationsRun: false,
   logging: false,
   namingStrategy: new SnakeNamingStrategy(),
 };
