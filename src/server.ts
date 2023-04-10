@@ -5,6 +5,11 @@ import { UserRouter } from './user/user.router';
 import { ConfigServer } from './config/config';
 import { DataSource } from 'typeorm';
 import { UserEntity } from './user/entities/user.entity';
+import { CategoryRouter } from './category/category.router';
+import { CustomerRouter } from './customers/customer.route';
+import { ProductRouter } from './product/product.router';
+import { PurchaseRouter } from './purchase/purchase.router';
+import { PurchaseProductRouter } from './purchase/purchases-product.router';
 
 class ServerBootstrap extends ConfigServer {
   public app: express.Application = express();
@@ -23,7 +28,14 @@ class ServerBootstrap extends ConfigServer {
   }
 
   public routers(): Array<express.Router> {
-    return [new UserRouter().router];
+    return [
+      new UserRouter().router,
+      new CategoryRouter().router,
+      new CustomerRouter().router,
+      new ProductRouter().router,
+      new PurchaseRouter().router,
+      new PurchaseProductRouter().router,
+    ];
   }
 
   public listen(): void {
